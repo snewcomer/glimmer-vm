@@ -9,7 +9,7 @@ import {
 } from "@glimmer/test-helpers";
 import { module, test } from './support';
 import { UpdatableReference } from '@glimmer/object-reference';
-import { Simple, Opaque, Option } from '@glimmer/interfaces';
+import { Opaque, Option } from '@glimmer/interfaces';
 
 import {
   Template,
@@ -52,7 +52,7 @@ function commonSetup(customEnv = new TestEnvironment()) {
 function render<T>(template: Template<T>, self: any) {
   let result: RenderResult;
   env.begin();
-  let templateIterator = template.render({ self: new UpdatableReference(self), parentNode: root, dynamicScope: new TestDynamicScope() });
+  let templateIterator = template.render({ env, self: new UpdatableReference(self), parentNode: root, dynamicScope: new TestDynamicScope() });
   let iteratorResult: IteratorResult<RenderResult>;
   do {
     iteratorResult = templateIterator.next();
@@ -1032,7 +1032,7 @@ module("[glimmer runtime] Initial render", tests => {
 module('Style attributes', {
   beforeEach() {
     class StyleEnv extends TestEnvironment {
-      attributeFor(element: Simple.Element, attr: string, isTrusting: boolean, namespace: Option<string>): DynamicAttributeFactory {
+      attributeFor(element: Element, attr: string, isTrusting: boolean, namespace: Option<string>): DynamicAttributeFactory {
         if (attr === 'style' && !isTrusting) {
           return StyleAttribute;
         }

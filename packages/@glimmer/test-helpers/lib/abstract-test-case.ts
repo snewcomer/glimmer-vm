@@ -83,7 +83,7 @@ function isMarker(node: Node) {
 }
 
 export class RenderingTest {
-  public template: Template<undefined>;
+  public template: Template;
   protected context: Option<VersionedObject> = null;
   private result: Option<RenderResult> = null;
   public snapshot: Node[];
@@ -105,7 +105,7 @@ export class RenderingTest {
 
     this.context = rootObject;
 
-    let templateIterator = this.template.render({ self: root, parentNode: appendTo, dynamicScope: new TestDynamicScope() });
+    let templateIterator = this.template.render({ env: this.env, self: root, parentNode: appendTo, dynamicScope: new TestDynamicScope() });
 
     let result;
     do {

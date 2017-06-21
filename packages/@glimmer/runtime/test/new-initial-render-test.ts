@@ -1,5 +1,5 @@
 import { Opaque, Option, Dict } from "@glimmer/interfaces";
-import { Template, RenderResult, RenderOptions, IteratorResult } from "@glimmer/runtime";
+import { RenderResult, RenderOptions, IteratorResult } from "@glimmer/runtime";
 import { TestEnvironment, equalTokens, TestDynamicScope } from "@glimmer/test-helpers";
 import { UpdatableReference } from "@glimmer/object-reference";
 import { expect, dict } from "@glimmer/util";
@@ -243,17 +243,13 @@ abstract class RenderTest {
     this.assertHTML('<div><span>tomdale</span> - Thomas Dale<span>wycats</span> - Yehuda Katz</div>');
   }
 
-  protected compile(template: string): Template<Opaque> {
-    return this.env.compile(template);
-  }
-
   render(template: string, properties: Dict<Opaque> = {}): void {
     this.setProperties(properties);
 
-    this.renderResult = this.renderTemplate(this.compile(template));
+    this.renderResult = this.renderTemplate(template);
   }
 
-  protected abstract renderTemplate(template: Template<Opaque>): RenderResult;
+  protected abstract renderTemplate(template: string): RenderResult;
 
   rerender(properties: Dict<Opaque> = {}): void {
     this.setProperties(properties);
@@ -346,8 +342,9 @@ module("Initial Render Tests", class extends RenderTest {
     this.element = env.getDOM().createElement('div') as HTMLDivElement;
   }
 
-  renderTemplate(template: Template<Opaque>): RenderResult {
-    return renderTemplate(this.env, template, {
+  renderTemplate(template: string): RenderResult {
+    return renderTemplate(template, {
+      env: this.env,
       self: new UpdatableReference(this.context),
       parentNode: this.element,
       dynamicScope: new TestDynamicScope()
@@ -383,7 +380,7 @@ function content(list: Content[]): string {
 
 class Rehydration extends RenderTest {
   protected element: HTMLDivElement;
-  protected template: Option<Template<Opaque>>;
+  protected template = '';
 
   constructor(env = new TestEnvironment()) {
     super(env);
@@ -435,7 +432,7 @@ class Rehydration extends RenderTest {
   }
 
   protected setup({ template, context }: { template: string, context?: Dict<Opaque> }) {
-    this.template = this.compile(template);
+    this.template = template;
     if (context) this.setProperties(context);
   }
 
@@ -448,7 +445,8 @@ class Rehydration extends RenderTest {
 
     let template = expect(this.template, 'Must set up a template before calling renderServerSide');
     // Emulate server-side render
-    renderTemplate(new TestEnvironment(), template, {
+    renderTemplate(template, {
+      env: new TestEnvironment(),
       self: new UpdatableReference(this.context),
       parentNode: this.element,
       dynamicScope: new TestDynamicScope(),
@@ -464,7 +462,8 @@ class Rehydration extends RenderTest {
     let template = expect(this.template, 'Must set up a template before calling renderClientSide');
 
     // Client-side rehydration
-    this.renderResult = renderTemplate(this.env, template, {
+    this.renderResult = renderTemplate(template, {
+      env: this.env,
       self: new UpdatableReference(this.context),
       parentNode: this.element,
       dynamicScope: new TestDynamicScope(),
@@ -472,7 +471,7 @@ class Rehydration extends RenderTest {
     });
   }
 
-  renderTemplate(template: Template<Opaque>): RenderResult {
+  renderTemplate(template: string): RenderResult {
     this.template = template;
     this.renderServerSide();
     this.renderClientSide();
@@ -504,10 +503,12 @@ function isTestFunction(value: any): value is (this: RenderTest, assert: typeof 
   return typeof value === 'function' && value.isTest;
 }
 
-function renderTemplate(env: TestEnvironment, template: Template<Opaque>, options: RenderOptions) {
+function renderTemplate(template: string, options: RenderOptions & { env: TestEnvironment }) {
+  let { env } = options;
+
   env.begin();
 
-  let templateIterator = template.render(options);
+  let templateIterator = env.compile(template).render(options);
 
   let iteratorResult: IteratorResult<RenderResult>;
 
