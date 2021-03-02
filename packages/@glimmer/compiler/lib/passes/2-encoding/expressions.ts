@@ -47,6 +47,14 @@ export class ExpressionEncoder {
         return this.Equal(expr);
       case 'NotEqual':
         return this.NotEqual(expr);
+      case 'Less':
+        return this.Less(expr);
+      case 'LessEqual':
+        return this.LessEqual(expr);
+      case 'Greater':
+        return this.Greater(expr);
+      case 'GreaterEqual':
+        return this.GreaterEqual(expr);
     }
   }
 
@@ -182,6 +190,22 @@ export class ExpressionEncoder {
 
   NotEqual({ positional }: mir.NotEqual): WireFormat.Expressions.NotEqual {
     return [SexpOpcodes.NotEqual, this.Positional(positional)];
+  }
+
+  Less({ lOperand, rOperand }: mir.Less): WireFormat.Expressions.Less {
+    return [SexpOpcodes.Less, EXPR.expr(lOperand), EXPR.expr(rOperand)];
+  }
+
+  LessEqual({ lOperand, rOperand }: mir.LessEqual): WireFormat.Expressions.LessEqual {
+    return [SexpOpcodes.LessEqual, EXPR.expr(lOperand), EXPR.expr(rOperand)];
+  }
+
+  Greater({ lOperand, rOperand }: mir.Greater): WireFormat.Expressions.Greater {
+    return [SexpOpcodes.Greater, EXPR.expr(lOperand), EXPR.expr(rOperand)];
+  }
+
+  GreaterEqual({ lOperand, rOperand }: mir.GreaterEqual): WireFormat.Expressions.GreaterEqual {
+    return [SexpOpcodes.GreaterEqual, EXPR.expr(lOperand), EXPR.expr(rOperand)];
   }
 }
 

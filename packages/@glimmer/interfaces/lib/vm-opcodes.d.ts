@@ -111,4 +111,8 @@ export const enum Op {
   Log = 112,
   Equal = 113,
   NotEqual = 114,
+  Less = 115,
+  LessEqual = 116,
+  Greater = 117,
+  GreaterEqual = 118,
 }

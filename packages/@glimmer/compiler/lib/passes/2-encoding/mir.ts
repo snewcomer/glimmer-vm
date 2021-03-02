@@ -75,6 +75,26 @@ export class NotEqual extends node('NotEqual').fields<{
   positional: Positional;
 }>() {}
 
+export class Less extends node('Less').fields<{
+  lOperand: ExpressionNode;
+  rOperand: ExpressionNode;
+}>() {}
+
+export class LessEqual extends node('LessEqual').fields<{
+  lOperand: ExpressionNode;
+  rOperand: ExpressionNode;
+}>() {}
+
+export class Greater extends node('Greater').fields<{
+  lOperand: ExpressionNode;
+  rOperand: ExpressionNode;
+}>() {}
+
+export class GreaterEqual extends node('GreaterEqual').fields<{
+  lOperand: ExpressionNode;
+  rOperand: ExpressionNode;
+}>() {}
+
 export class InvokeComponent extends node('InvokeComponent').fields<{
   definition: ExpressionNode;
   args: Args;
@@ -230,7 +250,11 @@ export type ExpressionNode =
   | GetDynamicVar
   | Log
   | Equal
-  | NotEqual;
+  | NotEqual
+  | Less
+  | LessEqual
+  | Greater
+  | GreaterEqual;
 
 export type ElementParameter = StaticAttr | DynamicAttr | Modifier | SplatAttr;
 
