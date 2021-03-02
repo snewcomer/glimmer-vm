@@ -103,6 +103,10 @@ export const enum SexpOpcodes {
   Log = 54,
   Equal = 55,
   NotEqual = 56,
+  Less = 57,
+  LessEqual = 58,
+  Greater = 59,
+  GreaterEqual = 60,
 
   GetStart = GetSymbol,
   GetEnd = GetFreeAsComponentHead,
@@ -249,6 +253,10 @@ export namespace Expressions {
     | Not
     | Equal
     | NotEqual
+    | Less
+    | LessEqual
+    | Greater
+    | GreaterEqual
     | Log;
 
   // TODO get rid of undefined, which is just here to allow trailing undefined in attrs
@@ -273,6 +281,18 @@ export namespace Expressions {
   export type Equal = [op: SexpOpcodes.Equal, positional: Params];
 
   export type NotEqual = [op: SexpOpcodes.NotEqual, positional: Params];
+
+  export type Less = [op: SexpOpcodes.Less, lOperand: Expression, rOperand: Expression];
+
+  export type LessEqual = [op: SexpOpcodes.LessEqual, lOperand: Expression, rOperand: Expression];
+
+  export type Greater = [op: SexpOpcodes.Greater, lOperand: Expression, rOperand: Expression];
+
+  export type GreaterEqual = [
+    op: SexpOpcodes.GreaterEqual,
+    lOperand: Expression,
+    rOperand: Expression
+  ];
 
   export type GetDynamicVar = [op: SexpOpcodes.GetDynamicVar, value: Expression];
 

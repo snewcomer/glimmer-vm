@@ -1,6 +1,7 @@
 import { CurriedType } from '@glimmer/interfaces';
 
 import { keywords } from './impl';
+import { comparisonKeyword } from './utils/comparison';
 import { curryKeyword } from './utils/curry';
 import { getDynamicVarKeyword } from './utils/dynamic-vars';
 import { equalKeyword, notEqualKeyword } from './utils/equality';
@@ -15,6 +16,10 @@ export const CALL_KEYWORDS = keywords('Call')
   .kw('log', logKeyword)
   .kw('eq', equalKeyword, { strictOnly: true })
   .kw('neq', notEqualKeyword, { strictOnly: true })
+  .kw('lt', comparisonKeyword('lt'))
+  .kw('lte', comparisonKeyword('lte'))
+  .kw('gt', comparisonKeyword('gt'))
+  .kw('gte', comparisonKeyword('gte'))
   .kw('if', ifUnlessInlineKeyword('if'))
   .kw('unless', ifUnlessInlineKeyword('unless'))
   .kw('component', curryKeyword(CurriedType.Component))

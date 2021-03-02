@@ -268,6 +268,18 @@ export default class WireFormatDebugger {
 
         case Op.NotEqual:
           return ['neq', this.formatParams(opcode[1])];
+
+        case Op.Less:
+          return ['lt'];
+
+        case Op.LessEqual:
+          return ['lte'];
+
+        case Op.Greater:
+          return ['gt'];
+
+        case Op.GreaterEqual:
+          return ['gte'];
       }
     } else {
       return opcode;
