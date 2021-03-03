@@ -55,6 +55,10 @@ export class ExpressionEncoder {
         return this.Greater(expr);
       case 'GreaterEqual':
         return this.GreaterEqual(expr);
+      case 'And':
+        return this.And(expr);
+      case 'Or':
+        return this.Or(expr);
     }
   }
 
@@ -206,6 +210,14 @@ export class ExpressionEncoder {
 
   GreaterEqual({ lOperand, rOperand }: mir.GreaterEqual): WireFormat.Expressions.GreaterEqual {
     return [SexpOpcodes.GreaterEqual, EXPR.expr(lOperand), EXPR.expr(rOperand)];
+  }
+
+  And({ positional }: mir.And): WireFormat.Expressions.And {
+    return [SexpOpcodes.And, this.Positional(positional)];
+  }
+
+  Or({ positional }: mir.Or): WireFormat.Expressions.Or {
+    return [SexpOpcodes.Or, this.Positional(positional)];
   }
 }
 

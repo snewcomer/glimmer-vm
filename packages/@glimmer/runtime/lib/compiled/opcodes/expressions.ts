@@ -386,3 +386,49 @@ APPEND_OPCODES.add(Op.GreaterEqual, (vm) => {
     })
   );
 });
+
+APPEND_OPCODES.add(Op.And, (vm) => {
+  let { positional } = check(vm.stack.popJs(), CheckArguments).capture();
+  let stack = vm.stack;
+
+  stack.pushJs(
+    createComputeRef(() => {
+      let values = reifyPositional(positional);
+
+      // this is handlebars definition of truthiness
+      for (let i = 0, len = values.length; i < len; i++) {
+        if (isTruthy(values[i]) === false) {
+          return values[i];
+        }
+      }
+      return values[values.length - 1];
+    })
+  );
+});
+
+APPEND_OPCODES.add(Op.Or, (vm) => {
+  let { positional } = check(vm.stack.popJs(), CheckArguments).capture();
+  let stack = vm.stack;
+
+  stack.pushJs(
+    createComputeRef(() => {
+      let values = reifyPositional(positional);
+
+      // this is handlebars definition of truthiness
+      for (let i = 0, len = values.length; i < len; i++) {
+        if (isTruthy(values[i]) === true) {
+          return values[i];
+        }
+      }
+      return values[values.length - 1];
+    })
+  );
+});
+
+function isTruthy(result: unknown) {
+  if (Array.isArray(result)) {
+    return result.length !== 0;
+  } else {
+    return !!result;
+  }
+}
