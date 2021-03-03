@@ -280,6 +280,12 @@ export default class WireFormatDebugger {
 
         case Op.GreaterEqual:
           return ['gte'];
+
+        case Op.And:
+          return ['and'];
+
+        case Op.Or:
+          return ['or', this.formatParams(opcode[1])];
       }
     } else {
       return opcode;

@@ -107,6 +107,8 @@ export const enum SexpOpcodes {
   LessEqual = 58,
   Greater = 59,
   GreaterEqual = 60,
+  And = 61,
+  Or = 62,
 
   GetStart = GetSymbol,
   GetEnd = GetFreeAsComponentHead,
@@ -257,6 +259,8 @@ export namespace Expressions {
     | LessEqual
     | Greater
     | GreaterEqual
+    | And
+    | Or
     | Log;
 
   // TODO get rid of undefined, which is just here to allow trailing undefined in attrs
@@ -293,6 +297,10 @@ export namespace Expressions {
     lOperand: Expression,
     rOperand: Expression
   ];
+
+  export type And = [op: SexpOpcodes.And, positional: Params];
+
+  export type Or = [op: SexpOpcodes.Or, positional: Params];
 
   export type GetDynamicVar = [op: SexpOpcodes.GetDynamicVar, value: Expression];
 

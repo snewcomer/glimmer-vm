@@ -95,6 +95,14 @@ export class GreaterEqual extends node('GreaterEqual').fields<{
   rOperand: ExpressionNode;
 }>() {}
 
+export class And extends node('And').fields<{
+  positional: Positional;
+}>() {}
+
+export class Or extends node('Or').fields<{
+  positional: Positional;
+}>() {}
+
 export class InvokeComponent extends node('InvokeComponent').fields<{
   definition: ExpressionNode;
   args: Args;
@@ -248,7 +256,9 @@ export type ExpressionNode =
   | Less
   | LessEqual
   | Greater
-  | GreaterEqual;
+  | GreaterEqual
+  | And
+  | Or;
 
 export type ElementParameter = StaticAttr | DynamicAttr | Modifier | SplatAttr;
 

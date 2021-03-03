@@ -115,4 +115,6 @@ export const enum Op {
   LessEqual = 116,
   Greater = 117,
   GreaterEqual = 118,
+  And = 119,
+  Or = 120,
 }

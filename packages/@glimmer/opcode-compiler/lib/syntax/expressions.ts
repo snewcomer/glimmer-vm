@@ -178,6 +178,16 @@ EXPRESSIONS.add(SexpOpcodes.GreaterEqual, (op, [, lOperand, rOperand]) => {
   op(Op.GreaterEqual);
 });
 
+EXPRESSIONS.add(SexpOpcodes.And, (op, [, positional]) => {
+  SimpleArgs(op, positional, null, false);
+  op(Op.And);
+});
+
+EXPRESSIONS.add(SexpOpcodes.Or, (op, [, positional]) => {
+  SimpleArgs(op, positional, null, false);
+  op(Op.Or);
+});
+
 EXPRESSIONS.add(SexpOpcodes.GetDynamicVar, (op, [, expression]) => {
   expr(op, expression);
   op(Op.GetDynamicVar);
