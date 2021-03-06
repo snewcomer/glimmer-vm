@@ -1,4 +1,4 @@
-import { RenderTest, test, jitSuite } from '../..';
+import { RenderTest, test, jitSuite, syntaxErrorFor } from '../..';
 
 class AndTest extends RenderTest {
   static suiteName = '{{and}} keyword';
@@ -119,3 +119,30 @@ class OrTest extends RenderTest {
 }
 
 jitSuite(OrTest);
+
+class NotTest extends RenderTest {
+  static suiteName = '{{not}} keyword';
+
+  @test
+  ['it works']() {
+    this.render(`{{not 1}}`);
+
+    this.assertHTML('false');
+  }
+
+  @test
+  ['it works falsey']() {
+    this.render(`{{not 0}}`);
+
+    this.assertHTML('true');
+  }
+
+  @test
+  ['it errors with too many arguments']() {
+    this.assert.throws(() => {
+      this.render(`{{not 1 2}}`);
+    }, syntaxErrorFor('(not) only accepts 1 argument', '{{not 1 2}}', 'an unknown module', 1, 0));
+  }
+}
+
+jitSuite(NotTest);
