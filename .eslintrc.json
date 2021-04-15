@@ -20,6 +20,7 @@
       "tryExtensions": [".js", ".ts", ".d.ts", ".json"]
     }
   },
+  "ignorePatterns": ["dist", "ts-dist", "node_modules", "tmp"],
   "rules": {
     // disabled because we still have a few commented tests
     "qunit/no-commented-tests": "off",
