@@ -388,10 +388,10 @@ APPEND_OPCODES.add(Op.GreaterEqual, (vm) => {
 });
 
 APPEND_OPCODES.add(Op.And, (vm) => {
-  let { positional } = check(vm.stack.popJs(), CheckArguments).capture();
+  let { positional } = check(vm.stack.pop(), CheckArguments).capture();
   let stack = vm.stack;
 
-  stack.pushJs(
+  stack.push(
     createComputeRef(() => {
       let values = reifyPositional(positional);
 
@@ -407,10 +407,10 @@ APPEND_OPCODES.add(Op.And, (vm) => {
 });
 
 APPEND_OPCODES.add(Op.Or, (vm) => {
-  let { positional } = check(vm.stack.popJs(), CheckArguments).capture();
+  let { positional } = check(vm.stack.pop(), CheckArguments).capture();
   let stack = vm.stack;
 
-  stack.pushJs(
+  stack.push(
     createComputeRef(() => {
       let values = reifyPositional(positional);
 
