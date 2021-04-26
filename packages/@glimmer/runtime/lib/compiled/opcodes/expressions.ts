@@ -344,10 +344,10 @@ APPEND_OPCODES.add(Op.NotEqual, (vm) => {
 });
 
 APPEND_OPCODES.add(Op.Less, (vm) => {
-  let lOperand = check(vm.stack.popJs(), CheckReference);
-  let rOperand = check(vm.stack.popJs(), CheckReference);
+  let lOperand = check(vm.stack.pop(), CheckReference);
+  let rOperand = check(vm.stack.pop(), CheckReference);
 
-  vm.stack.pushJs(
+  vm.stack.push(
     createComputeRef(() => {
       return (valueForRef(lOperand) as any) < (valueForRef(rOperand) as any);
     })
@@ -355,10 +355,10 @@ APPEND_OPCODES.add(Op.Less, (vm) => {
 });
 
 APPEND_OPCODES.add(Op.LessEqual, (vm) => {
-  let lOperand = check(vm.stack.popJs(), CheckReference);
-  let rOperand = check(vm.stack.popJs(), CheckReference);
+  let lOperand = check(vm.stack.pop(), CheckReference);
+  let rOperand = check(vm.stack.pop(), CheckReference);
 
-  vm.stack.pushJs(
+  vm.stack.push(
     createComputeRef(() => {
       return (valueForRef(lOperand) as any) <= (valueForRef(rOperand) as any);
     })
@@ -366,10 +366,10 @@ APPEND_OPCODES.add(Op.LessEqual, (vm) => {
 });
 
 APPEND_OPCODES.add(Op.Greater, (vm) => {
-  let lOperand = check(vm.stack.popJs(), CheckReference);
-  let rOperand = check(vm.stack.popJs(), CheckReference);
+  let lOperand = check(vm.stack.pop(), CheckReference);
+  let rOperand = check(vm.stack.pop(), CheckReference);
 
-  vm.stack.pushJs(
+  vm.stack.push(
     createComputeRef(() => {
       return (valueForRef(lOperand) as any) > (valueForRef(rOperand) as any);
     })
@@ -377,10 +377,10 @@ APPEND_OPCODES.add(Op.Greater, (vm) => {
 });
 
 APPEND_OPCODES.add(Op.GreaterEqual, (vm) => {
-  let lOperand = check(vm.stack.popJs(), CheckReference);
-  let rOperand = check(vm.stack.popJs(), CheckReference);
+  let lOperand = check(vm.stack.pop(), CheckReference);
+  let rOperand = check(vm.stack.pop(), CheckReference);
 
-  vm.stack.pushJs(
+  vm.stack.push(
     createComputeRef(() => {
       return (valueForRef(lOperand) as any) >= (valueForRef(rOperand) as any);
     })
