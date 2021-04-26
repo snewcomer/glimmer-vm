@@ -8,6 +8,7 @@ import { equalKeyword, notEqualKeyword } from './utils/equality';
 import { hasBlockKeyword } from './utils/has-block';
 import { ifUnlessInlineKeyword } from './utils/if-unless';
 import { logKeyword } from './utils/log';
+import { andKeyword, notKeyword, orKeyword } from './utils/logical';
 
 export const CALL_KEYWORDS = keywords('Call')
   .kw('has-block', hasBlockKeyword('has-block'))
@@ -20,6 +21,9 @@ export const CALL_KEYWORDS = keywords('Call')
   .kw('lte', comparisonKeyword('lte'), { strictOnly: true })
   .kw('gt', comparisonKeyword('gt'), { strictOnly: true })
   .kw('gte', comparisonKeyword('gte'), { strictOnly: true })
+  .kw('and', andKeyword, { strictOnly: true })
+  .kw('or', orKeyword, { strictOnly: true })
+  .kw('not', notKeyword, { strictOnly: true })
   .kw('if', ifUnlessInlineKeyword('if'))
   .kw('unless', ifUnlessInlineKeyword('unless'))
   .kw('component', curryKeyword(CurriedType.Component))
