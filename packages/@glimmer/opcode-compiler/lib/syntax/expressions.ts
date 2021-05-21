@@ -201,6 +201,30 @@ EXPRESSIONS.add(SexpOpcodes.NotEqual, (op, [, positional]) => {
   op(Op.NotEqual);
 });
 
+EXPRESSIONS.add(SexpOpcodes.Less, (op, [, lOperand, rOperand]) => {
+  expr(op, rOperand);
+  expr(op, lOperand);
+  op(Op.Less);
+});
+
+EXPRESSIONS.add(SexpOpcodes.LessEqual, (op, [, lOperand, rOperand]) => {
+  expr(op, rOperand);
+  expr(op, lOperand);
+  op(Op.LessEqual);
+});
+
+EXPRESSIONS.add(SexpOpcodes.Greater, (op, [, lOperand, rOperand]) => {
+  expr(op, rOperand);
+  expr(op, lOperand);
+  op(Op.Greater);
+});
+
+EXPRESSIONS.add(SexpOpcodes.GreaterEqual, (op, [, lOperand, rOperand]) => {
+  expr(op, rOperand);
+  expr(op, lOperand);
+  op(Op.GreaterEqual);
+});
+
 EXPRESSIONS.add(SexpOpcodes.GetDynamicVar, (op, [, expression]) => {
   expr(op, expression);
   op(Op.GetDynamicVar);

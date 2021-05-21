@@ -23,6 +23,8 @@ export const KEYWORDS_TYPES: { [key: string]: KeywordType[] } = {
   log: ['Call', 'Append'],
   eq: ['Call', 'Append'],
   neq: ['Call', 'Append'],
+  lt: ['Call', 'Append'],
+  lte: ['Call', 'Append'],
   modifier: ['Call'],
   mount: ['Append'],
   mut: ['Call', 'Append'],
